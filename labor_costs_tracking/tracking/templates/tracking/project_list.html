@@ -1,0 +1,43 @@
+{% extends "tracking/home.html" %}
+{% load static %}
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'tracking/css/lists.css' %}">
+    <div class="container">
+        <div class="table-container">
+            <div class="table-header">
+                <h1 class="first-table-item"> {{ title }}</h1>
+                <a href="{% url 'add_project' %}" class="last-table-item">Добавить проект</a>
+            </div>
+            <div class="table-content">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Клиент</th>
+                            <th>Название</th>
+                            <th>Дата создания</th>
+                            <th>Дата закрытия</th>
+                            <th>Значение</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                            <tr>
+                                <td>{{ item.client }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.start_date|date:"d.m.Y" }}</td>
+                                <td>{{ item.end_date|date:"d.m.Y" }}</td>
+                                <td>{{ item.amount }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% include "tracking/paginator.html" %}           
+        </div>
+    </div>
+
+    <div id="tooltip" class="tooltip" style="display: none;"></div>
+    <script src="{% static 'tracking/js/resize.js' %}"></script>
+    
+{% endblock %}

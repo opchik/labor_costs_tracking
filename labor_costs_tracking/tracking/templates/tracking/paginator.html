@@ -1,0 +1,30 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'tracking/css/paginator.css' %}">
+
+
+{% if page_obj.has_other_pages %}
+    <nav class="list-pages">
+        {% if page_obj.has_previous %}
+            <div class="page-item page-num">
+                <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+            </div>
+        {% endif %}
+        {% for p in paginator.page_range %}
+            {% if page_obj.number == p %}
+                <div class="page-item page-num-selected">
+                    {{ p }}
+                </div>
+            {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2  %}
+                <div class="page-item page-num">
+                    <a href="?page={{ p }}">{{ p }}</a>
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <div class="page-item page-num">
+                <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+            </div>
+        {% endif %}
+    </nav>
+{% endif %}

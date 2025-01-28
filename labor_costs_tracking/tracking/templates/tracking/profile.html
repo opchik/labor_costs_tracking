@@ -1,0 +1,40 @@
+{% extends "tracking/home.html" %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'tracking/css/profile.css' %}">
+    <div class="container">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h2>Мой профиль </h2>
+            </div>
+            <form method="post">
+                {% csrf_token %}    
+                <div class="form-group">
+                    <p>Имя пользователя:</p>
+                    <input class="profile-form" type="text" id="username" name="username" value="{{ profile.username }}" required>
+                </div>
+                <div class="form-group">
+                    <p>Email:</p>
+                    <input class="profile-form" type="email" id="email" name="email" value="{{ profile.email }}" required>
+                </div>
+                <div class="form-group">
+                    <p>Полное имя:</p>
+                    <input class="profile-form" type="full_name" id="full_name" name="full_name" value="{{ profile.full_name }}" required disabled>
+                </div>
+                <div class="form-group">
+                    <p>Должность:</p>
+                    <input class="profile-form" type="position" id="position" name="position" value="{{ profile.position }}" required disabled>
+                </div>
+                <div class="form-group">
+                    <p>Отдел:</p>
+                    <input class="profile-form" type="department" id="department" name="department" value="{{ profile.department }}" required disabled>
+                </div>
+                <div class="form-group">
+                    <p>Зарплата:</p>
+                    <input class="profile-form" type="salary" id="salary" name="salary" value="{{ profile.salary }} руб." required disabled>
+                </div>
+                <button type="submit" class="btn">Изменить данные</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

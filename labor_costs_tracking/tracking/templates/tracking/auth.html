@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вход</title>
+    <link rel="stylesheet" href="{% static 'tracking/css/auth_body.css' %}">
+    <link rel="stylesheet" href="{% static 'tracking/css/forms.css' %}">
+</head>
+<body> 
+     <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-error">{{ form.non_field_errors }}</div>
+            {% if title == "Регистрация" %}
+                <h2>Регистрация</h2>
+            {% else %}
+                <h2>Вход в Tracking</h2>
+            {% endif %}
+            {% for f in form %}
+                <div class="form-group">
+                    <label for="{{ f.id_for_label }}">{{f.label}}:</label>
+                    {{ f }}
+                    <div class="form-error">{{ f.errors }}</div>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn">Войти</button>
+        </form>
+        {% if title == "Регистрация" %}
+            <p>Уже есть аккаунт? <a href="{% url 'login' %}">Войдите здесь</a>
+        {% else %}
+            <p>Нет аккаунта?</p>
+            <a href="{% url 'register' %}">Зарегистрируйтесь здесь.</a>
+        {% endif %}
+    </div>
+</body>
+</html>

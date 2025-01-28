@@ -1,0 +1,34 @@
+{% extends "tracking/home.html" %}
+{% load static %}
+
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'tracking/css/forms.css' %}">
+    <div class="my-container">
+        <div class="container">
+            <form method="post">
+            {% csrf_token %}
+            <div class="form-error">{{ form.non_field_errors }}</div>
+            {% if title == "Добавление проекта" %}
+                <a class="close-wrapper" href="{% url 'project_list' %}">
+                    <img class="close-button" src="{% static 'tracking/images/close-button.png' %}">
+                </a>
+                <h2> {{ title }} </h2>
+            {% else %}
+                <a class="close-wrapper" href="{% url 'worklog_list' %}">
+                    <img class="close-button" src="{% static 'tracking/images/close-button.png' %}">
+                </a>
+                <h2> {{ title }} </h2>
+            {% endif %}
+            {% for f in form %}
+                <div class="form-group">
+                    <label for="{{ f.id_for_label }}">{{f.label}}:</label>
+                    {{ f }}
+                    <div class="form-error">{{ f.errors }}</div>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn">Сохранить</button>
+        </form>
+        </div>
+    </div>
+{% endblock %}
