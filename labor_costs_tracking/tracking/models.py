@@ -59,6 +59,14 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+    def calculate_profit_or_loss(self):
+        labor_costs = sum(
+            log.hours_spent * log.user.salary
+            for log in self.work_logs.all()
+        )
+        additional_expenses = 0
+        return self.amount - labor_costs - additional_expenses
+
 
 class WorkLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='work_logs')
@@ -70,4 +78,7 @@ class WorkLog(models.Model):
 
     def __str__(self):
         return f"{self.user.full_name} - {self.project.name} - {self.date}"
+
+    def calculate_labor_costs(self):
+        return self.hours_spent * self.user.salary
 

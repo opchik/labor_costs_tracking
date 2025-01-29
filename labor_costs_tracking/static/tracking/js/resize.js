@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     tableCells.forEach(cell => {
         cell.addEventListener('mouseenter', function(event) {
             const content = this.getAttribute('title') || this.innerText;
-            if (content != "") {
+            if (content != "" & content != "Смотреть") {
                 tooltip.innerText = content;
                 tooltip.style.left = `${event.pageX + 10}px`;
                 tooltip.style.top = `${event.pageY + 10}px`;

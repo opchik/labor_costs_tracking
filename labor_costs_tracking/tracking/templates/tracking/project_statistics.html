@@ -1,0 +1,84 @@
+{% extends "tracking/home.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'tracking/css/statistics.css' %}">
+
+    <div class="main-container">
+        <div class="container">
+            <div class="close-wrapper">
+                <a href="{% url 'final_list' %}">&lt;Назад</a>
+            </div>
+            <div class="main-content">
+                <div class="left-side half-side">
+                    <div class="half-side-header">
+                        <h2>Статистика по проекту:</h2>
+                        <h2>"{{ project.name }}"</h2>
+                    </div>
+                    <div class="content">
+                        <div class="group-content">
+                            <p>Клиент:</p>
+                            <p>{{ project.client }}</p>
+                        </div>
+                        <div class="group-content">
+                            <p>Стоимость:</p>
+                            <p>{{ project.amount }} руб.</p>
+                        </div>
+                        <div class="group-content">
+                            <p>Трудозатраты:</p>
+                            <p>{{ labor_costs }} руб.</p>
+                        </div>
+                        <div class="group-content">
+                            <p>Доп. расходы:</p>
+                            <p>{{ additional_expenses }} руб.</p>
+                        </div>
+                        <div class="group-content">
+                            <p>Итог:</p>
+                            <p>
+                                {% if profit_or_loss >= 0 %}
+                                    <span style="color: green;">+{{ profit_or_loss }} руб.</span>
+                                {% else %}
+                                    <span style="color: red;">{{ profit_or_loss }}руб.</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-side half-side">
+                    <div class="half-side-header">
+                        <h2>История работ</h2>
+                    </div>
+                    {% if work_logs %}
+                        <div class="content">
+                            <div class="table-content">
+                                <table class="styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Сотрудник</th>
+                                            <th>Часы работы</th>
+                                            <th>Стоимость часа</th>
+                                            <th>Сумма</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for log in work_logs %}
+                                            <tr>
+                                                <td>{{ log.user.full_name }}</td>
+                                                <td>{{ log.hours_spent }}</td>
+                                                <td>{{ log.user.salary }}</td>                                            
+                                                <td>{{ log.labor_cost }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table> 
+                            </div> 
+                        </div>
+                    {% else %}  
+                        <p>Данных пока нет</p>
+                    {% endif %}       
+                </div>       
+            </div>            
+        </div>        
+    </div>
+
+{% endblock %}

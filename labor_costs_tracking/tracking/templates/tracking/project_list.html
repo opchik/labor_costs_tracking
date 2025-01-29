@@ -7,7 +7,9 @@
         <div class="table-container">
             <div class="table-header">
                 <h1 class="first-table-item"> {{ title }}</h1>
-                <a href="{% url 'add_project' %}" class="last-table-item">Добавить проект</a>
+                {% if title == "Список проектов" %}
+                    <a href="{% url 'add_project' %}" class="last-table-item">Добавить проект</a>
+                {% endif %}
             </div>
             <div class="table-content">
                 <table class="styled-table">
@@ -18,6 +20,10 @@
                             <th>Дата создания</th>
                             <th>Дата закрытия</th>
                             <th>Значение</th>
+                            {% if title == "Итоговый список" %}
+                                <th>Прибыль</th>
+                                <th>Статистика</th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
@@ -28,6 +34,20 @@
                                 <td>{{ item.start_date|date:"d.m.Y" }}</td>
                                 <td>{{ item.end_date|date:"d.m.Y" }}</td>
                                 <td>{{ item.amount }}</td>
+                                {% if title == "Итоговый список" %}
+                                    <td>
+                                        {% if item.profit_or_loss >= 0 %}
+                                            <span style="color: green;">+{{ item.profit_or_loss }}</span>
+                                        {% else %}
+                                            <span style="color: red;">{{ item.profit_or_loss }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="no-hover">
+                                        <div class="btn">
+                                            <a href="{% url 'project_statistics' item.id %}" class="btn-stat">Смотреть</a>
+                                        </div>
+                                    </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>

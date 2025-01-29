@@ -93,6 +93,10 @@
     background-color: #dedcdc;
 }
 
+.styled-table td.no-hover:hover {
+    background-color: white;
+}
+
 .tooltip {
     position: absolute;
     background-color: #fff;
@@ -102,6 +106,27 @@
     z-index: 1000;
     border-radius: 5px;
     white-space: nowrap;
+}
+.btn {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+
+	.btn-stat {
+		display: flex;
+		height: 14px;
+		background-color: #ff7f50;
+		font-size: 14px;
+		color: white;
+		border-radius: 8px;
+		padding: 10px;
+
+		&:hover {
+		    background-color: #ff6347;
+		    text-decoration: none;
+		}
+	}
 }
 
 
