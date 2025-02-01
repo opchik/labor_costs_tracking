@@ -55,6 +55,7 @@
 
 					.group-content {
 						display: flex;
+						align-items: flex-end;
 						justify-content: space-between;
 						margin-top: 20px;
 						width: 100%;
@@ -117,8 +118,32 @@
 
 
 .close-wrapper{
+	display: flex;
+	justify-content: space-between;
 	margin: 0 20px;
 	a{
 		color: #f77839;
+	}
+}
+
+
+.btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.btn-stat {
+		display: flex;
+		height: 14px;
+		background-color: #ff7f50;
+		font-size: 14px;
+		color: white;
+		border-radius: 8px;
+		padding: 10px;
+
+		&:hover {
+		    background-color: #ff6347;
+		    text-decoration: none;
+		}
 	}
 }

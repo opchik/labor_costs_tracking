@@ -11,7 +11,7 @@ class ProjectForm(forms.ModelForm):
 
     client = forms.ModelChoiceField(label='Клиент', queryset=Client.objects.all(), widget=forms.Select(attrs={'class': 'form-input'}))
     name = forms.CharField(label='Название проекта', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    amount = forms.DecimalField(label='Сумма', max_digits=20, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-input'}))
+    amount = forms.DecimalField(label='Сумма', max_digits=10, decimal_places=0, widget=forms.NumberInput(attrs={'class': 'form-input'}))
     start_date = forms.DateField(label='Дата начала', widget=forms.DateInput(attrs={'class': 'form-input', 'type': 'date'}))
     end_date = forms.DateField(label='Дата окончания', widget=forms.DateInput(attrs={'class': 'form-input', 'type': 'date'}))
     class Meta:
@@ -60,4 +60,9 @@ class UserProfileForm(forms.ModelForm):
         fields = ('username', 'email')
 
 
+class AdditionalCostsForm(forms.ModelForm):
+    additional_costs = forms.DecimalField(label='Доп. расходы', max_digits=10, decimal_places=0, widget=forms.NumberInput(attrs={'class': 'form-input'}))
 
+    class Meta:
+        model = Project
+        fields = ['additional_costs']

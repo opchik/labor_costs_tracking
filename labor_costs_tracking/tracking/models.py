@@ -55,6 +55,7 @@ class Project(models.Model):
     amount = models.DecimalField(max_digits=20, decimal_places=2)
     start_date = models.DateField()
     end_date = models.DateField()
+    additional_costs = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, default=0)
 
     def __str__(self):
         return self.name
@@ -64,8 +65,7 @@ class Project(models.Model):
             log.hours_spent * log.user.salary
             for log in self.work_logs.all()
         )
-        additional_expenses = 0
-        return self.amount - labor_costs - additional_expenses
+        return self.amount - labor_costs - self.additional_costs
 
 
 class WorkLog(models.Model):

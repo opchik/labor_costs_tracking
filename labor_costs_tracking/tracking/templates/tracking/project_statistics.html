@@ -8,6 +8,9 @@
         <div class="container">
             <div class="close-wrapper">
                 <a href="{% url 'final_list' %}">&lt;Назад</a>
+                <div class="btn">
+                    <a href="{% url 'add_additional_costs' project.id %}" class="btn-stat">Изменить доп. расходы</a>
+                </div>
             </div>
             <div class="main-content">
                 <div class="left-side half-side">
@@ -30,7 +33,7 @@
                         </div>
                         <div class="group-content">
                             <p>Доп. расходы:</p>
-                            <p>{{ additional_expenses }} руб.</p>
+                            <p>{{ additional_costs }} руб.</p>
                         </div>
                         <div class="group-content">
                             <p>Итог:</p>
@@ -63,9 +66,9 @@
                                     <tbody>
                                         {% for log in work_logs %}
                                             <tr>
-                                                <td>{{ log.user.full_name }}</td>
+                                                <td>{{ log.name }}</td>
                                                 <td>{{ log.hours_spent }}</td>
-                                                <td>{{ log.user.salary }}</td>                                            
+                                                <td>{{ log.salary }}</td>                                            
                                                 <td>{{ log.labor_cost }}</td>
                                             </tr>
                                         {% endfor %}

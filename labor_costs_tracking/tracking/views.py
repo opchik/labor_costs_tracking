@@ -1,15 +1,16 @@
 from django.views import View
 from django.urls import reverse_lazy
 from django.contrib.auth import login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.views import LoginView
+from django.views.generic.edit import UpdateView
 from django.views.generic import CreateView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .utils import DataMixin
 from .models import Project, WorkLog, User
 from .forms import (ProjectForm, WorkLogForm, RegisterUserForm,
-                    LoginUserForm, UserProfileForm)
+                    LoginUserForm, UserProfileForm, AdditionalCostsForm)
 
 
 class ProjectList(LoginRequiredMixin, DataMixin, ListView):
@@ -140,21 +141,48 @@ class ProjectStatistics(LoginRequiredMixin, DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         project = self.object
         work_logs = project.work_logs.all()
+        aggregated_data = {}
+        for log in work_logs:
+            if log.user.full_name in aggregated_data:
+                aggregated_data[log.user.full_name]["hours_spent"] += log.hours_spent
+            else:
+                aggregated_data[log.user.full_name] = {"hours_spent": log.hours_spent, "salary": log.user.salary}
+        work_logs = [
+            {
+                "name": name, 
+                "hours_spent": data["hours_spent"], 
+                "salary": data["salary"],
+                "labor_cost":  data["hours_spent"]*data["salary"]
+            }
+            for name, data in aggregated_data.items()
+        ]
         labor_costs = sum(
-            log.hours_spent * log.user.salary
+            log["hours_spent"] * log["salary"]
             for log in work_logs
         )
-        additional_expenses = 0
-        profit_or_loss = project.amount - labor_costs - additional_expenses
+        profit_or_loss = project.amount - labor_costs - project.additional_costs
         context['work_logs'] = work_logs
         context['labor_costs'] = labor_costs
-        context['additional_expenses'] = additional_expenses
+        context['additional_costs'] = project.additional_costs
         context['profit_or_loss'] = profit_or_loss
-        for work_log in context['work_logs']:
-                work_log.labor_cost = work_log.calculate_labor_costs()
         context.update(self.get_user_context(title="Статистика по проекту"))
         return context
 
     def get_queryset(self):
         return Project.objects.all()
 
+
+
+class AddAdditionalCosts(LoginRequiredMixin, DataMixin, UpdateView):
+    model = Project
+    form_class = AdditionalCostsForm
+    template_name = 'tracking/additional_costs.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Project, pk=self.kwargs['pk'])
+
+    def get_success_url(self):
+        return reverse_lazy('project_statistics', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        return super().form_valid(form)

@@ -13,5 +13,6 @@ urlpatterns = [
     path('worklogs/', WorkLogList.as_view(), name='worklog_list'),
     path('worklogs/add/', AddWorkLog.as_view(), name='add_worklog'),
     path('final_list', ProjectList.as_view(), name='final_list'),
-    path('final_list/<int:pk>/statistics/', ProjectStatistics.as_view(), name='project_statistics')
+    path('final_list/<int:pk>/statistics/', ProjectStatistics.as_view(), name='project_statistics'),
+    path('additional_costs/<int:pk>', AddAdditionalCosts.as_view(), name='add_additional_costs'),
 ]
