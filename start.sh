@@ -26,7 +26,7 @@ fi
 cd labor_costs_tracking
 
 # проверка миграций
-UNAPPLIED_MIGRATIONS=$(python3 manage.py makemigrations | grep 'No changes detected' | wc -l)
+UNAPPLIED_MIGRATIONS=$(python3 manage.py makemigrations | grep 'No changes detected' | wc -l);
 
 if [ "$UNAPPLIED_MIGRATIONS" -gt 0 ]; then
     echo "Обнаружены неприменённые миграции. Применяем их..."
