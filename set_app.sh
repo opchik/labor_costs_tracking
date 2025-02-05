@@ -26,7 +26,7 @@ cd labor_costs_tracking
 python3 manage.py makemigrations
 python3 manage.py migrate
 
-
+echo "Создание суперпользователя:"
 python3 manage.py createsuperuser
 
 
