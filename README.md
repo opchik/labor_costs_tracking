@@ -41,7 +41,7 @@ cd labor_costs_tracking
 Выдаем права на запуск скрипта найстройки и запуска:
 
 ```bash
-chmod u+x script.sh set_app.sh
+chmod u+x start.sh set_app.sh
 ```
 
 Запускаем скрипт настройки:
