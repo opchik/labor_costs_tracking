@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from .models import Project, WorkLog, User, Client, Department
+from .models import Project, WorkLog, User, Client, Department, Task
 
 
 class ProjectForm(forms.ModelForm):
@@ -28,7 +28,7 @@ class WorkLogForm(forms.ModelForm):
     project = forms.ModelChoiceField(label='Проект', queryset=Project.objects.all(), widget=forms.Select(attrs={'class': 'form-input'}))
     date = forms.DateField(label='Дата', widget=forms.DateInput(attrs={'class': 'form-input', 'type': 'date'}))
     department = forms.ModelChoiceField(label='Отдел', queryset=Department.objects.all(), widget=forms.Select(attrs={'class': 'form-input'}))
-    task = forms.CharField(label='Задача', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    task = forms.ModelChoiceField(label='Задача', queryset=Task.objects.all(), widget=forms.Select(attrs={'class': 'form-input'}))
     hours_spent = forms.DecimalField(label='Часы', max_digits=5, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-input'}))
     class Meta:
         model = WorkLog

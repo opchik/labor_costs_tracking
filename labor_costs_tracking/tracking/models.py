@@ -2,6 +2,13 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+class Task(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Department(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
@@ -73,7 +80,7 @@ class WorkLog(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='work_logs')
     date = models.DateField()
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, blank=True, null=True)
-    task = models.CharField(max_length=255)
+    task = models.ForeignKey(Task, on_delete=models.SET_NULL, blank=True, null=True)
     hours_spent = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
