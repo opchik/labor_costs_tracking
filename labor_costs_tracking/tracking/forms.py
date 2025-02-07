@@ -24,6 +24,7 @@ class WorkLogForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['project'].empty_label = None
         self.fields['department'].empty_label = None
+        self.fields['task'].empty_label = None
 
     project = forms.ModelChoiceField(label='Проект', queryset=Project.objects.all(), widget=forms.Select(attrs={'class': 'form-input'}))
     date = forms.DateField(label='Дата', widget=forms.DateInput(attrs={'class': 'form-input', 'type': 'date'}))
