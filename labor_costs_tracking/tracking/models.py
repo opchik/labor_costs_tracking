@@ -83,9 +83,9 @@ class WorkLog(models.Model):
     task = models.ForeignKey(Task, on_delete=models.SET_NULL, blank=True, null=True)
     hours_spent = models.DecimalField(max_digits=5, decimal_places=2)
 
-    def __str__(self):
-        return f"{self.user.full_name} - {self.project.name} - {self.date}"
-
     def calculate_labor_costs(self):
         return self.hours_spent * self.user.salary
+
+    def __str__(self):
+        return f"{self.user.full_name} - {self.project.name} - {self.date}"
 
