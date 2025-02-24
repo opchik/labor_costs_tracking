@@ -9,7 +9,7 @@
             <div class="close-wrapper">
                 <a href="{% url 'final_list' %}">&lt;Назад</a>
                 <div class="btn">
-                    <a href="{% url 'add_additional_costs' project.id %}" class="btn-stat">Изменить доп. расходы</a>
+                    <a href="{% url 'add_additional_costs' project.id %}" class="btn-stat">Изменить прямые расходы</a>
                 </div>
             </div>
             <div class="main-content">
@@ -32,7 +32,7 @@
                             <p>{{ labor_costs }} руб.</p>
                         </div>
                         <div class="group-content">
-                            <p>Доп. расходы:</p>
+                            <p>Прямые расходы:</p>
                             <p>{{ additional_costs }} руб.</p>
                         </div>
                         <div class="group-content">

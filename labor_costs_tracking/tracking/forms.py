@@ -62,7 +62,7 @@ class UserProfileForm(forms.ModelForm):
 
 
 class AdditionalCostsForm(forms.ModelForm):
-    additional_costs = forms.DecimalField(label='Доп. расходы', max_digits=10, decimal_places=0, widget=forms.NumberInput(attrs={'class': 'form-input'}))
+    additional_costs = forms.DecimalField(label='Прямые расходы', max_digits=10, decimal_places=0, widget=forms.NumberInput(attrs={'class': 'form-input'}))
 
     class Meta:
         model = Project
