@@ -20,6 +20,13 @@ from .forms import (
 )
 
 
+def custom_404_view(request, exception):
+    return render(request, 'tracking/404.html', status=404)
+
+def custom_403_view(request, exception=None):
+    return render(request, 'tracking/403.html', status=403)
+
+
 class ProjectList(LoginRequiredMixin, DataMixin, ListView):
     model = Project
     template_name = "tracking/list.html"
