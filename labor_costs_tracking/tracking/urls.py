@@ -15,4 +15,6 @@ urlpatterns = [
     path('final_list', ProjectList.as_view(), name='final_list'),
     path('final_list/<int:pk>/statistics/', ProjectStatistics.as_view(), name='project_statistics'),
     path('additional_costs/<int:pk>', AddAdditionalCosts.as_view(), name='add_additional_costs'),
+    path('users', UserList.as_view(), name='users_list'),
+    path('users/<int:pk>/statistics/', UserStatistics.as_view(), name='users_statistics'),
 ]

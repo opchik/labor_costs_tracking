@@ -1,0 +1,95 @@
+{% extends "tracking/home.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'tracking/css/statistics.css' %}">
+<link rel="stylesheet" href="{% static 'tracking/css/user_statistics.css' %}">
+
+    <div class="main-container">
+        <div class="container">
+            <div class="close-wrapper">
+                <a href="{% url 'users_list' %}">&lt;Назад</a>
+            </div>
+            <div class="main-content">
+                <div class="left-side half-side">
+                    <div class="half-side-header">
+                        <h2>{{ item.full_name }}</h2>
+                    </div>
+                    <div class="content">
+                        <div class="group-content">
+                            <p>Должность</p>
+                            <p>{{ item.position }}</p>
+                        </div>
+                        <div class="group-content">
+                            <p>Отдел:</p>
+                            <p>{{ item.department }}</p>
+                        </div>
+                        <div class="group-content">
+                            <p>Зарплата (в час):</p>
+                            <p>{{ item.salary }} руб.</p>
+                        </div>
+                        <div class="group-content">
+                            <p>Общее время работы:</p>
+                            <p>{{ hours }} ч.</p>
+                        </div>
+                        <div class="group-content">
+                            <p>Общая сумма:</p>
+                            <p>{{ money }} руб.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-side half-side">
+                    <div class="half-side-header">
+                        <h2>История работ</h2>
+                    </div>
+                    {% if projects %}
+                        <div class="user_statistics_container">
+                            {% for project in projects %}
+                                <div class="content">
+                                    <h3>{{ project.name }}</h3>
+                                    <div class="group-content">
+                                        <p>Общее время:</p>
+                                        <p>{{ project.hours }} ч.</p>
+                                    </div>
+                                    <div class="group-content">
+                                        <p>Вовлеченность:</p>
+                                        <p>{{ project.involvment }} %</p>
+                                    </div>
+                                    <div class="group-content">
+                                        <p>Общая сумма:</p>
+                                        <p>{{ project.money }} руб.</p>
+                                    </div>
+                                    <div class="table-content user_table">
+                                        <table class="styled-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Дата</th>
+                                                    <th>Задача</th>
+                                                    <th>Время, ч.</th>
+                                                    <th>Сумма, руб.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for log in project.worklogs_data %}
+                                                    <tr>
+                                                        <td>{{ log.date|date:"d.m.Y"}}</td>
+                                                        <td>{{ log.task }}</td>
+                                                        <td>{{ log.hours }}</td>   
+                                                        <td>{{ log.money }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table> 
+                                    </div> 
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}  
+                        <p>Данных пока нет</p>
+                    {% endif %}       
+                </div>       
+            </div>            
+        </div>        
+    </div>
+
+{% endblock %}

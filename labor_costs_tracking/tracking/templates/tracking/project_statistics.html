@@ -59,8 +59,9 @@
                                         <tr>
                                             <th>Сотрудник</th>
                                             <th>Часы работы</th>
-                                            <th>Стоимость часа</th>
-                                            <th>Сумма</th>
+                                            <th>Стоимость часа, руб.</th>
+                                            <th>Вовлеченность, %</th>
+                                            <th>Сумма, руб.</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -68,7 +69,8 @@
                                             <tr>
                                                 <td>{{ log.name }}</td>
                                                 <td>{{ log.hours_spent }}</td>
-                                                <td>{{ log.salary }}</td>                                            
+                                                <td>{{ log.salary }}</td>   
+                                                <td>{{ log.involvement }}</td>                                      
                                                 <td>{{ log.labor_cost }}</td>
                                             </tr>
                                         {% endfor %}

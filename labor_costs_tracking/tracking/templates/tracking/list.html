@@ -1,0 +1,112 @@
+{% extends "tracking/home.html" %}
+{% load static %}
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'tracking/css/lists.css' %}">
+    <div class="container">
+        <div class="table-container">
+            <div class="table-header">
+                <h1 class="first-table-item"> {{ title }}</h1>
+                {% if title == "Список проектов" %}
+                    <a href="{% url 'add_project' %}" class="last-table-item">Добавить проект</a>
+                {% endif %}
+                {% if title == "Трудозатраты" %}
+                    <a href="{% url 'add_worklog' %}" class="last-table-item">Добавить запись</a>
+                {% endif %}
+            </div>
+            <div class="table-content">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            {% if title == "Сотрудники" %}
+                                <th>Сотрудник</th>
+                                <th>Время работы, ч.</th>
+                                <th>Вовлеченность, %</th>
+                                <th>Сумма, руб.</th>
+                                <th>Подробнее</th>
+                            {% else %}
+                                {% if title == "Трудозатраты" %}
+                                    <th>Дата</th>
+                                    <th>Отдел</th>
+                                    <th>Клиент</th>
+                                    <th>Проект</th>
+                                    <th>Задача</th>
+                                    <th>Время</th>
+                                {% else %}
+                                    <th>Клиент</th>
+                                    <th>Название</th>
+                                    <th>Дата создания</th>
+                                    <th>Дата закрытия</th>
+                                    <th>Сумма акта, руб.</th>
+                                    {% if title == "Итоговый список" %}
+                                        <th>Прибыль, руб.</th>
+                                        <th>Статистика</th>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if title == "Сотрудники" %}
+                            {% for item in user_stats %}
+                                <tr>
+                                    <td>{{ item.user.full_name }}</td>
+                                    <td>{{ item.hours }}</td>
+                                    <td>{{ item.hours_percentage }}</td>
+                                    <td>{{ item.money }}</td>
+                                    <td class="no-hover">
+                                        <div class="btn">
+                                            <a href="{% url 'users_statistics' item.user.id %}" class="btn-stat">Смотреть</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            {% if title == "Трудозатраты" %}
+                                {% for item in items %}
+                                    <tr>
+                                        <td>{{ item.date|date:"d.m.Y" }}</td>
+                                        <td>{{ item.department }}</td>
+                                        <td>{{ item.project.client }}</td>
+                                        <td>{{ item.project }}</td>
+                                        <td>{{ item.task }}</td>
+                                        <td>{{ item.hours_spent }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                {% for item in items %}
+                                    <tr>
+                                        <td>{{ item.client }}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.start_date|date:"d.m.Y" }}</td>
+                                        <td>{{ item.end_date|date:"d.m.Y" }}</td>
+                                        <td>{{ item.amount }}</td>
+                                        {% if title == "Итоговый список" %}
+                                            <td>
+                                                {% if item.profit_or_loss >= 0 %}
+                                                    <span style="color: green;">+{{ item.profit_or_loss }}</span>
+                                                {% else %}
+                                                    <span style="color: red;">{{ item.profit_or_loss }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td class="no-hover">
+                                                <div class="btn">
+                                                    <a href="{% url 'project_statistics' item.id %}" class="btn-stat">Смотреть</a>
+                                                </div>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            {% include "tracking/paginator.html" %}           
+        </div>
+    </div>
+
+    <div id="tooltip" class="tooltip" style="display: none;"></div>
+    <script src="{% static 'tracking/js/resize.js' %}"></script>
+    
+{% endblock %}

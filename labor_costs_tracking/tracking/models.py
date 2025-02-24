@@ -51,6 +51,18 @@ class User(AbstractUser):
         verbose_name='user permissions',
     )
 
+    def count_hours(self):
+        user_hours = sum(log.hours_spent for log in self.work_logs.all())
+        total_hours = sum(log.hours_spent for log in WorkLog.objects.all())
+        percentage = (user_hours / total_hours * 100)
+        return user_hours, percentage
+
+    def calculate_money(self):
+        user_money = sum(log.hours_spent * log.user.salary for log in self.work_logs.all())
+        total_money = sum(log.hours_spent * log.user.salary for log in WorkLog.objects.all())
+        percentage = (user_money / total_money * 100)
+        return user_money, percentage
+
     def __str__(self):
         return self.username
 

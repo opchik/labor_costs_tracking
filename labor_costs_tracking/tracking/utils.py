@@ -18,4 +18,6 @@ class DataMixin:
         if self.request.user.is_authenticated:
             context['user'] = self.request.user
         context['menu'] = user_menu
+        if self.request.user.is_superuser:
+            context['menu'].append({'title':'Сотрудники', 'url_name': 'users_list'})
         return context
